@@ -19,4 +19,5 @@ public interface Animal {
 
     public void kartinkiZhivotnuh ();
     public void vuvodInfo();
+    public int getMaxAge();
 }

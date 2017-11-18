@@ -1,8 +1,10 @@
 package com.level.zoo;
 
 import com.level.zoo.animal.Animal;
+import com.level.zoo.animal.AnimalInitializer;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -19,6 +21,25 @@ public class Zoo {
         animals = new Animal[defaultMaxZooLength];
         this.animalCounter = 0;
     }
+
+    public Zoo(String zooName, int razmerZoo) throws IllegalAccessException, InstantiationException {
+        this.zooName = zooName;
+        animals = new Animal[razmerZoo];
+        this.animalCounter = 0;
+        for (int index=0;index<razmerZoo;index++){
+             animals[index] = createNewAnimal();
+        }
+    }
+
+    private Animal createNewAnimal() throws InstantiationException, IllegalAccessException {
+        Random random=new Random();
+        String[] massName={"Седжуани","Ренектон","Гнидали","Рексай","Насус"};
+        Animal animal = AnimalInitializer.getAnimalFromMenu(random.nextInt(4)+1);
+        animal.setName( massName[ random.nextInt( massName.length ) ] );
+        animal.setAge(random.nextInt(animal.getMaxAge()));
+        return animal;
+    }
+
 
     public Animal[] getAnimals() {
         return this.animals;

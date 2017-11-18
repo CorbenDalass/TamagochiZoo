@@ -6,6 +6,11 @@ import com.level.zoo.animal.AbstractAnimal;
  * Created by cube on 09.11.2017.
  */
 public class Elephant extends AbstractAnimal {
+
+    {
+        maxAge = 70;
+    }
+
     @Override
     public void say() {
         System.out.println("Ту-тууу!");

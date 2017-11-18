@@ -6,6 +6,11 @@ import com.level.zoo.animal.AbstractAnimal;
  * Created by cube on 09.11.2017.
  */
 public class Cat extends AbstractAnimal {
+
+    {
+        maxAge = 21;
+    }
+
     @Override
     public void say() {
         System.out.println("Мяу");

@@ -7,6 +7,10 @@ import com.level.zoo.animal.AbstractAnimal;
  */
 public class Tiger extends AbstractAnimal {
 
+    {
+        maxAge = 26;
+    }
+
     @Override
     public void say() {
         System.out.println("РРРРРррр!!!!");

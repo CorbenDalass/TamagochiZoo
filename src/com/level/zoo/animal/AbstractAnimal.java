@@ -7,6 +7,12 @@ public abstract class AbstractAnimal implements Animal {
 
     private String name;
     private int age;
+    protected int maxAge;
+
+    @Override
+    public int getMaxAge() {
+        return maxAge;
+    }
 
     public String goToToilet() {
         return "=^-^= срунь срунь";
