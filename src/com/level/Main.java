@@ -3,7 +3,9 @@ package com.level;
 import com.level.zoo.MenuStandardComponent;
 import com.level.zoo.Zoo;
 import com.level.zoo.animal.AnimalInitializer;
+import com.level.zoo.animal.impl.FileUtils;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -19,6 +21,7 @@ public class Main {
         System.out.println("Как вы хотите создать шкуропарк");
         System.out.println("1-вручную");
         System.out.println("2-рандом");
+        System.out.println("3-Прочитать из файла");
         switch (scanner.nextInt()) {
             case 1:
                 System.out.println("Введите имя зоопарка");
@@ -38,10 +41,18 @@ public class Main {
                 razmer=scanner.nextInt();
                 zoo=new Zoo(name, razmer);
                 break;
-
+            case 3:
+                try {
+                    String content = FileUtils.read("src/Zoo.txt");
+                    String[]razdelenie = content.split("\n");
+                    zoo=new Zoo(razdelenie);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
 
-
+        zoo.createTeemo();
         System.out.println("Хоч глянуть пугала?");
         while (!exitFromViewer) {
             System.out.println("Режим просмотра шкур");

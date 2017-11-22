@@ -1,5 +1,6 @@
 package com.level.zoo;
 
+import com.level.zoo.animal.AbstractAnimal;
 import com.level.zoo.animal.Animal;
 import com.level.zoo.animal.AnimalInitializer;
 
@@ -26,16 +27,47 @@ public class Zoo {
         this.zooName = zooName;
         animals = new Animal[razmerZoo];
         this.animalCounter = 0;
-        for (int index=0;index<razmerZoo;index++){
-             animals[index] = createNewAnimal();
+        for (int index = 0; index < razmerZoo; index++) {
+            animals[index] = createNewAnimal();
         }
     }
 
+    public Zoo(String[] razdelenie) throws IllegalAccessException, InstantiationException {
+        this.zooName = razdelenie[0];
+        animals = new Animal[razdelenie.length - 1];
+        for (int schetchik = 1; schetchik < razdelenie.length; schetchik++) {
+            animals[schetchik - 1] = createAnimalFromString(razdelenie[schetchik].split(" "));
+
+        }
+    }
+
+    private Animal createAnimalFromString(String[] split) throws InstantiationException, IllegalAccessException {
+        int animalIndex = 0;
+        switch (split[0]) {
+            case "Cat":
+                animalIndex = 3;
+                break;
+            case "Dog":
+                animalIndex = 4;
+                break;
+            case "Elephant":
+                animalIndex = 2;
+                break;
+            case "Tiger":
+                animalIndex = 1;
+                break;
+        }
+        Animal animal = AnimalInitializer.getAnimalFromMenu(animalIndex);
+        animal.setName(split[1]);
+        animal.setAge(Integer.parseInt(split[2]));
+        return animal;
+    }
+
     private Animal createNewAnimal() throws InstantiationException, IllegalAccessException {
-        Random random=new Random();
-        String[] massName={"Седжуани","Ренектон","Гнидали","Рексай","Насус"};
-        Animal animal = AnimalInitializer.getAnimalFromMenu(random.nextInt(4)+1);
-        animal.setName( massName[ random.nextInt( massName.length ) ] );
+        Random random = new Random();
+        String[] massName = {"Седжуани", "Ренектон", "Гнидали", "Рексай", "Насус"};
+        Animal animal = AnimalInitializer.getAnimalFromMenu(random.nextInt(4) + 1);
+        animal.setName(massName[random.nextInt(massName.length)]);
         animal.setAge(random.nextInt(animal.getMaxAge()));
         return animal;
     }
@@ -58,16 +90,19 @@ public class Zoo {
     }
 
 
-
-    private Animal askAnimalInfo(Animal animal){
+    private Animal askAnimalInfo(Animal animal) {
         Scanner scanner = new Scanner(System.in);
         int age;
         String name;
         System.out.println("Введите имя шкуры");
-        name=scanner.next();
+        name = scanner.next();
         scanner.nextLine();
         System.out.println("Введите возраст шкуры");
-        age=scanner.nextInt();
+        age = scanner.nextInt();
+        while (age < AbstractAnimal.MIN_AGE || age > animal.getMaxAge()) {
+            System.out.println("Введите Адекватный возраст");
+            age = scanner.nextInt();
+        }
         animal.setName(name);
         animal.setAge(age);
         return animal;
@@ -111,10 +146,71 @@ public class Zoo {
     }
 
     public boolean showAnimal(int animalNumber) {
-        if (animalNumber==0){
+        if (animalNumber == 0) {
             return true;
         }
-        animals[animalNumber-1].vuvodInfo();
+        animals[animalNumber- 1].vuvodInfo();
         return false;
+    }
+
+    public void createTeemo() {
+        Random random = new Random();
+        if (random.nextInt(10) == 1) {
+            System.out.println("В зоопарке замечено инородное существо");
+            Animal[] newAnimalNameArray = new Animal[animals.length + 1];
+            System.arraycopy(animals, 0, newAnimalNameArray, 0, animals.length);
+            animals = newAnimalNameArray;
+            class ChypoTeemo extends AbstractAnimal {
+
+                String[] teetoSay = {"One,two,three,four", "Будет бооольно", "Я научился убивать", "Я умею только убивать"};
+                String[] teetoKaka = {"Какулечка тут положу", "Вот тебе грибочек", "я тебе принес личинку зергов"};
+
+                {
+                    setName("Teemo");
+                    setAge(15);
+                }
+
+                @Override
+                public String goToToilet() {
+                    return teetoKaka[random.nextInt(teetoKaka.length)];
+                }
+
+                @Override
+                public void say() {
+                    System.out.println(teetoSay[random.nextInt(teetoSay.length)]);
+                }
+
+                @Override
+                public String getAnimalClass() {
+                    return "CHUPO TEEMO";
+                }
+
+                @Override
+                public void kartinkiZhivotnuh() {
+                    System.out.println("░░░░░░░░░░░▄▄▄▄░░░░░░░░░░░░░░░░░░░░░░");
+                    System.out.println("░░░░░░▄▄██████████▄▄░░░░░░░░░░░░░░░░░");
+                    System.out.println("░░░▄█████████████████▄░░░░░░░░░░░░░░░");
+                    System.out.println("░░█▀▀██████████████████░░░░░░░░░░░░░░");
+                    System.out.println("░█▀░███████████▀▀░░░░░█▀░░░░░░░░░░░░░");
+                    System.out.println("██░░░█████▀▀░░░░░░░░▄█▀░░░░░░░░░░░░░░");
+                    System.out.println("█░░░▄██▀░░░░▄▄▄░░▄▄█▀░░░░░░▄▄███▄▄░░░");
+                    System.out.println("██▄█▀░░░░░░██████▀░░░░░░░░█████████░░");
+                    System.out.println("░██░░░░░░▄▄███████░░░░░░░▀▀▀▀▀▀█████░");
+                    System.out.println("░░▀███▀▀▀▀░████████░░░░░░░░░░▄▄░░▀█▀░");
+                    System.out.println("░░░░░░░░░░░▀████████░░░░░░░░███░░░░░░");
+                    System.out.println("░░░░░░░░░░▄░▀██████▀░▀░░░▄░████░░░░▄░");
+                    System.out.println("░░░░░░▄░░░░▀▄░▀███▀░█░░░▄█░▀██▀░▄█▀░░");
+                    System.out.println("░░░░░░░█░░▄░░█▄▄▀▀░▄█░░▄██▄▄░▄▄██░░░░");
+                    System.out.println("░░░░░░░██▄██▄░███░░█████████████░░▄▀░");
+                    System.out.println("░░░░░░█████████████████████████████░░");
+                    System.out.println("░░░░▀███████████████████████████████▀");
+
+                }
+
+            }
+            animals[animals.length - 1] = new ChypoTeemo();
+        }
+
+
     }
 }

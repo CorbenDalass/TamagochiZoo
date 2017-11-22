@@ -8,6 +8,7 @@ public abstract class AbstractAnimal implements Animal {
     private String name;
     private int age;
     protected int maxAge;
+    public static final int MIN_AGE=0;
 
     @Override
     public int getMaxAge() {

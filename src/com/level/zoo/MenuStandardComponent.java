@@ -15,7 +15,7 @@ public class MenuStandardComponent {
     public final static String[] ADD_NEW_ANIMAL = new String[AnimalInitializer.getAnimalArraySize() + 1];
 
     static {
-        ADD_NEW_ANIMAL[0] = "Добавте животное";
+        ADD_NEW_ANIMAL[0] = "Добавте ШКУРУ";
         for (int i = 1; i < ADD_NEW_ANIMAL.length; i++) {
             ADD_NEW_ANIMAL[i] = i + ". " + AnimalInitializer.getAnimalsName()[i - 1];
         }
