@@ -31,6 +31,8 @@ public abstract class AbstractAnimal implements Animal {
         System.out.println(getAnimalClass());
         System.out.println(getName());
         System.out.println(getAge());
+        System.out.println(goToToilet());
+        say();
         kartinkiZhivotnuh();
     }
 

@@ -60,7 +60,5 @@ public class Main {
             System.out.println("1-" + zoo.getAnimals().length + ". Показать шкурку");
             exitFromViewer = zoo.showAnimal(scanner.nextInt());
         }
-
-
     }
 }

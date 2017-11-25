@@ -3,7 +3,9 @@ package com.level.zoo;
 import com.level.zoo.animal.AbstractAnimal;
 import com.level.zoo.animal.Animal;
 import com.level.zoo.animal.AnimalInitializer;
+import com.level.zoo.animal.impl.FileUtils;
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -32,7 +34,7 @@ public class Zoo {
         }
     }
 
-    public Zoo(String[] razdelenie) throws IllegalAccessException, InstantiationException {
+    public Zoo(String[] razdelenie) throws IllegalAccessException, InstantiationException, FileNotFoundException {
         this.zooName = razdelenie[0];
         animals = new Animal[razdelenie.length - 1];
         for (int schetchik = 1; schetchik < razdelenie.length; schetchik++) {
@@ -41,7 +43,8 @@ public class Zoo {
         }
     }
 
-    private Animal createAnimalFromString(String[] split) throws InstantiationException, IllegalAccessException {
+    private Animal createAnimalFromString(String[] split) throws InstantiationException, IllegalAccessException,
+            FileNotFoundException {
         int animalIndex = 0;
         switch (split[0]) {
             case "Cat":
@@ -59,7 +62,16 @@ public class Zoo {
         }
         Animal animal = AnimalInitializer.getAnimalFromMenu(animalIndex);
         animal.setName(split[1]);
-        animal.setAge(Integer.parseInt(split[2]));
+        int age = Integer.parseInt(split[2]);
+        if (age < AbstractAnimal.MIN_AGE || age > animal.getMaxAge()) {
+            try {
+                throw new AgeException();
+            } catch (AgeException e) {
+                e.printStackTrace();
+                FileUtils.update("src/output.txt", "Error has been occured during file reading - illegal animal age\n");
+            }
+        }
+        animal.setAge(age);
         return animal;
     }
 
@@ -149,7 +161,7 @@ public class Zoo {
         if (animalNumber == 0) {
             return true;
         }
-        animals[animalNumber- 1].vuvodInfo();
+        animals[animalNumber - 1].vuvodInfo();
         return false;
     }
 
